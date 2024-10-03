@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:frontend": "next dev",
-    "dev:backend": "node ./backend/Backend_API_endpoint.js",  
+    "dev:backend": "node ./backend/Backend_API_endpoint.js",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "next build",
     "start": "next start",

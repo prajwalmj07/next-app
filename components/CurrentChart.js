@@ -15,18 +15,24 @@ const CurrentChart = () => {
   useEffect(() => {
     const fetchCurrentData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/current?data_per_page=6'); // API call to your backend
+        // Call your backend API to get the energy meter data for the specific device serial number
+        const response = await fetch('http://localhost:5000/api/WR2009000663/energymeterdata?data_per_page=6'); // Replace YOUR_DEVICE_SERIAL with the actual device serial number
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched current data:', data); // Log the data to inspect
+        console.log('Fetched current data:', data); // Log the data to inspect the structure
 
-        // Update state with fetched current data
+        // Extract current data from the API response
+        const current1 = data.map(record => record.energyMeterdata.current.I1);
+        const current2 = data.map(record => record.energyMeterdata.current.I2);
+        const current3 = data.map(record => record.energyMeterdata.current.I3);
+
+        // Update state with the fetched current data
         setCurrentData({
-          current1: data.current1.split(', ').map(Number), // Convert data to numbers
-          current2: data.current2.split(', ').map(Number),
-          current3: data.current3.split(', ').map(Number),
+          current1: current1.map(Number), // Convert data to numbers
+          current2: current2.map(Number),
+          current3: current3.map(Number),
         });
       } catch (error) {
         console.error('Error fetching current data:', error);
@@ -82,10 +88,10 @@ const CurrentChart = () => {
           display: true,
           text: 'Current (A)', // Y-axis title
         },
-        min: 0.5, // Minimum value for Y-axis
-        max: 5, // Maximum value for Y-axis (adjust as needed)
+        min: 0, // Minimum value for Y-axis
+        max: 50, // Maximum value for Y-axis (adjust as needed)
         ticks: {
-          stepSize: 0.5, // Set step size for Y-axis ticks
+          stepSize: 5, // Set step size for Y-axis ticks
         },
       },
     },

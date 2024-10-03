@@ -15,32 +15,37 @@ const VoltageChart = () => {
   useEffect(() => {
     const fetchVoltageData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/voltage?data_per_page=6');
+        // Call your backend API to get the voltage data for the specific device serial number
+        const response = await fetch('http://localhost:5000/api/WR2009000663/energymeterdata?data_per_page=6'); // Replace YOUR_DEVICE_SERIAL with actual device serial number
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log the data to inspect the structure
 
-        // Update state with the fetched voltage data
+        // Extract voltage data from the API response
+        const voltage1 = data.map(record => record.energyMeterdata.voltage.V1);
+        const voltage2 = data.map(record => record.energyMeterdata.voltage.V2);
+        const voltage3 = data.map(record => record.energyMeterdata.voltage.V3);
+
+        // Update state with fetched voltage data
         setVoltageData({
-          voltage1: data.voltage1.split(', ').map(Number),
-          voltage2: data.voltage2.split(', ').map(Number),
-          voltage3: data.voltage3.split(', ').map(Number),
+          voltage1: voltage1.map(Number),
+          voltage2: voltage2.map(Number),
+          voltage3: voltage3.map(Number),
         });
       } catch (error) {
         console.error('Error fetching voltage data:', error);
       } finally {
         setLoading(false);
       }
-      console.log("Type voltage",voltage1);
     };
 
     fetchVoltageData();
   }, []); // Empty dependency array means this effect runs once on component mount
 
   // Prepare chart data
-  const labels = ['0s', '1s', '2s', '3s', '4s']; // Adjust labels as needed
+  const labels = ['0s', '1s', '2s', '3s', '4s', '5s']; // Adjust labels as needed
   const chartData = {
     labels: labels,
     datasets: [
@@ -71,7 +76,7 @@ const VoltageChart = () => {
       },
       {
         label: 'Lower Critical Limit',
-        data: [0, 0, 0, 0, 0,0], // Example critical limit values
+        data: [220, 220, 220, 220, 220, 220], // Example critical limit values
         borderColor: 'pink',
         borderDash: [5, 5],
         fill: false,
@@ -90,8 +95,8 @@ const VoltageChart = () => {
         },
       },
       y: {
-        min: 220,
-        max: 250,
+        min: 210, // Adjust based on your data range
+        max: 240, // Adjust based on your data range
         title: {
           display: true,
           text: 'Voltage (V)',

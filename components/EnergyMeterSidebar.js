@@ -1,20 +1,25 @@
+// components/EnergyMeterSidebar.js
 import React from 'react';
 
-const energyMeters = [
-  { id: 'WR2009000663', name: 'Energy Meter 1' },
-  { id: 'WR2009000664', name: 'Energy Meter 2' },
-  { id: 'WR2109000129', name: 'Energy Meter 3' },
-];
+const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
+  const energyMeters = [
+    { id: 'WR2009000663', name: 'Energy Meter 1' },
+    { id: 'WR2009000664', name: 'Energy Meter 2' },
+    { id: 'WR2109000129', name: 'Energy Meter 3' },
+  ];
 
-const EnergyMeterSidebar = ({ onSelectMeter }) => {
   return (
-    <div className="bg-gray-200 rounded-md p-4 w-full md:w-1/6 lg:w-1/8 xl:w-1/10 mb-4 md:mb-0">
-      <h2 className="font-semibold mb-2">Energy Meters</h2>
+    <div className="bg-white border-r border-gray-200 h-full">
+      <h2 className="font-semibold mb-4 text-gray-800 text-xl px-4 py-2 border-b border-gray-200">Energy Meters</h2>
       <ul>
         {energyMeters.map((meter) => (
           <li
             key={meter.id}
-            className="py-1 border-b cursor-pointer hover:bg-gray-300"
+            className={`py-3 px-4 cursor-pointer transition-colors duration-300 ${
+              selectedMeter === meter.id
+                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-500'
+                : 'text-gray-600 hover:bg-gray-50'
+            }`}
             onClick={() => onSelectMeter(meter.id)}
           >
             {meter.name}

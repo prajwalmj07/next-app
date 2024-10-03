@@ -1,4 +1,3 @@
-// components/VoltageChart.js
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,15 +7,17 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 // Register the required components
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-const VoltageChart = () => {
+const VoltageChart = ({ selectedMeter }) => {
   const [voltageData, setVoltageData] = useState({ voltage1: [], voltage2: [], voltage3: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVoltageData = async () => {
+      if (!selectedMeter) return; // Ensure selectedMeter is available before fetching
+
       try {
         // Call your backend API to get the voltage data for the specific device serial number
-        const response = await fetch('http://localhost:5000/api/WR2009000663/energymeterdata?data_per_page=6'); // Replace YOUR_DEVICE_SERIAL with actual device serial number
+        const response = await fetch(`http://localhost:5000/api/${selectedMeter}/energymeterdata?data_per_page=6`); // Use the selectedMeter from props
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -42,7 +43,7 @@ const VoltageChart = () => {
     };
 
     fetchVoltageData();
-  }, []); // Empty dependency array means this effect runs once on component mount
+  }, [selectedMeter]); // Fetch data when selectedMeter changes
 
   // Prepare chart data
   const labels = ['0s', '1s', '2s', '3s', '4s', '5s']; // Adjust labels as needed

@@ -1,31 +1,23 @@
 // components/GraphLayout.js
 import React from 'react';
 import Card from './Card';
-import VoltageChart from './VoltageChart';
-import EnergyConsumptionChart from './EnergyConsumptionChart';
-import CurrentChart from './CurrentChart'; // Import the new chart
+import VoltageChart from './charts/VoltageChart';
+import EnergyConsumptionChart from './charts/EnergyConsumptionChart';
+import CurrentChart from './charts/CurrentChart';
 
-const GraphLayout = () => {
+const GraphLayout = ({ selectedMeter }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-      <Card title="Graph 1">
-        <VoltageChart />
+      <Card title="Voltage Chart">
+        <VoltageChart selectedMeter={selectedMeter} />
       </Card>
       <Card title="Energy Consumption (Present)">
-        <EnergyConsumptionChart />
+        <EnergyConsumptionChart selectedMeter={selectedMeter} />
       </Card>
-      <Card title="Current"> {/* Updated title */}
-        <CurrentChart /> {/* Render the area chart here */}
+      <Card title="Current">
+        <CurrentChart selectedMeter={selectedMeter} />
       </Card>
-      <Card title="Graph 1">
-        <VoltageChart />
-      </Card>
-      <Card title="Energy Consumption (Present)">
-        <EnergyConsumptionChart />
-      </Card>
-      <Card title="Current"> {/* Updated title */}
-        <CurrentChart /> {/* Render the area chart here */}
-      </Card>
+      {/* Add additional graphs as needed */}
     </div>
   );
 };

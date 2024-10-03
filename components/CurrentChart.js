@@ -16,7 +16,7 @@ const CurrentChart = () => {
     const fetchCurrentData = async () => {
       try {
         // Call your backend API to get the energy meter data for the specific device serial number
-        const response = await fetch('http://localhost:5000/api/WR2009000663/energymeterdata?data_per_page=6'); // Replace YOUR_DEVICE_SERIAL with the actual device serial number
+        const response = await fetch('http://localhost:5000/api/WR2009000663/energymeterdata?data_per_page=11'); // Replace YOUR_DEVICE_SERIAL with the actual device serial number
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -44,7 +44,7 @@ const CurrentChart = () => {
     fetchCurrentData();
   }, []); // Fetch current data once on component mount
 
-  const labels = ['0s', '1s', '2s', '3s', '4s', '5s']; // X-axis labels
+  const labels = ['0s', '1s', '2s', '3s', '4s', '5s','6s','7s','8s','9s','10s']; // X-axis labels
 
   const data = {
     labels: labels,
@@ -89,9 +89,9 @@ const CurrentChart = () => {
           text: 'Current (A)', // Y-axis title
         },
         min: 0, // Minimum value for Y-axis
-        max: 50, // Maximum value for Y-axis (adjust as needed)
+        max: 15, // Maximum value for Y-axis (adjust as needed)
         ticks: {
-          stepSize: 5, // Set step size for Y-axis ticks
+          stepSize: 0.5, // Set step size for Y-axis ticks
         },
       },
     },

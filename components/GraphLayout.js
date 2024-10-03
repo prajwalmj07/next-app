@@ -17,6 +17,15 @@ const GraphLayout = () => {
       <Card title="Current"> {/* Updated title */}
         <CurrentChart /> {/* Render the area chart here */}
       </Card>
+      <Card title="Graph 1">
+        <VoltageChart />
+      </Card>
+      <Card title="Energy Consumption (Present)">
+        <EnergyConsumptionChart />
+      </Card>
+      <Card title="Current"> {/* Updated title */}
+        <CurrentChart /> {/* Render the area chart here */}
+      </Card>
     </div>
   );
 };

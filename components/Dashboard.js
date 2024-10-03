@@ -14,7 +14,7 @@ const Dashboard = () => {
           <DateRangeDropdown />
         </div>
         <GraphLayout />
-        <GraphLayout />
+       
         <DeviceInfo />
       </div>
     </div>

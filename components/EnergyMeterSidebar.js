@@ -1,6 +1,5 @@
 // components/EnergyMeterSidebar.js
 import React from 'react';
-
 const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
   const energyMeters = [
     { id: 'WR2009000663', name: 'Energy Meter 1' },
@@ -9,8 +8,8 @@ const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
   ];
 
   return (
-    <div className="bg-white border-r border-gray-200 h-full">
-      <h2 className="font-semibold mb-4 text-gray-800 text-xl px-4 py-2 border-b border-gray-200">Energy Meters</h2>
+    <div className="bg-white h-full">
+      <h2 className="font-semibold mb-4 text-gray-800 text-xl px-4 py-2 border-b border-gray-200 sticky top-0 bg-white z-10">Energy Meters</h2>
       <ul>
         {energyMeters.map((meter) => (
           <li
@@ -29,5 +28,4 @@ const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
     </div>
   );
 };
-
 export default EnergyMeterSidebar;

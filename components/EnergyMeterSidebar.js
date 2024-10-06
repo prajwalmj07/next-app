@@ -1,11 +1,16 @@
 // components/EnergyMeterSidebar.js
+import { selectedMeterState } from '@/lib/atoms';
 import React from 'react';
-const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
+import { useRecoilState } from 'recoil';
+
+
+const EnergyMeterSidebar = () => {
+  const [selectedMeter, setSelectedMeter] = useRecoilState(selectedMeterState);
+
   const energyMeters = [
     { id: 'WR2001000008', name: 'Energy Meter 1' },
     { id: "WR2009000663", name: 'Energy Meter 2' },
     { id: "WR2109000129", name: 'Energy Meter 3' },
-    // { id: "WR2109000127", name: 'Energy Meter 5' },
     { id: 'WR2109000127', name: 'Energy Meter 6' },
   ];
 
@@ -21,7 +26,7 @@ const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
                 ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-500'
                 : 'text-gray-600 hover:bg-gray-50'
             }`}
-            onClick={() => onSelectMeter(meter.id)}
+            onClick={() => setSelectedMeter(meter.id)}
           >
             {meter.name}
           </li>
@@ -30,4 +35,5 @@ const EnergyMeterSidebar = ({ onSelectMeter, selectedMeter }) => {
     </div>
   );
 };
+
 export default EnergyMeterSidebar;

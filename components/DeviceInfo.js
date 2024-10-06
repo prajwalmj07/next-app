@@ -1,20 +1,49 @@
-// components/DeviceInfo.js
 import React from 'react';
 
-const DeviceInfo = () => {
+const DeviceInfo = ({ deviceData }) => {
+  if (!deviceData) {
+    return (
+      <div className="bg-white shadow-lg rounded-lg p-4">
+        <h3 className="font-semibold text-gray-800 text-lg mb-2">Device Information</h3>
+        <p className="text-gray-600">No device selected.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-50 p-6 rounded-lg mt-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
-      <h4 className="font-semibold text-xl text-gray-800 mb-4">Device Information</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
-        <span>Device Name: Energy-Meter-02</span>
-        <span>Model Name: WR222-WLAN+LTE-E</span>
-        <span>Status: Normal</span>
-        <span>Serial Number: WR20090000663</span>
-        <span>IP Address: 192.168.1.10</span>
-        <span>MAC Address: 94:66:e7:00:57:c1</span>
-        <span>Version: 1.5.5</span>
+    <div className="bg-white shadow-lg rounded-lg p-4">
+      <h3 className="font-semibold text-gray-800 text-lg mb-4">Device Information</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <h4 className="font-semibold text-gray-700">Device Name</h4>
+          <p className="text-gray-600">{deviceData.name || 'N/A'}</p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-700">Device ID</h4>
+          <p className="text-gray-600">{deviceData.id || 'N/A'}</p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-700">Status</h4>
+          <p className={`font-semibold ${deviceData.status === 'active' ? 'text-green-600' : 'text-red-600'}`}>
+            {deviceData.status || 'N/A'}
+          </p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-700">Last Active</h4>
+          <p className="text-gray-600">{deviceData.lastActive || 'N/A'}</p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-700">Location</h4>
+          <p className="text-gray-600">{deviceData.location || 'N/A'}</p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-700">Energy Consumption</h4>
+          <p className="text-gray-600">{deviceData.energyConsumption || 'N/A'} kWh</p>
+        </div>
+        {/* Add more fields as required */}
       </div>
     </div>
   );
 };
+
 export default DeviceInfo;

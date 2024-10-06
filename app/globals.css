@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom styles */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -68,3 +69,16 @@
   }
 }
 
+/* Ensure charts do not overflow their containers */
+.chartjs-render-monitor {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Fullscreen container to prevent overflow */
+.fullscreen-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}

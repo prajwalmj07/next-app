@@ -139,3 +139,7 @@ async def get_energy_meter_data(device_serial: str, data_per_page: int = 1):
         })
 
     return transformed_data
+# Run the FastAPI app with Uvicorn
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=5000)

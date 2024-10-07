@@ -2,7 +2,17 @@ from fastapi import HTTPException
 
 # Transformation function to structure data based on graph type
 def transform_data(graph_type: str, raw_data):
-    transformed_data = {}
+    transformed_data = {
+        "date": [],  # To hold extracted dates
+        "time": []   # To hold extracted times
+    }
+
+    for record in raw_data:
+        timestamp = record.get('created_at', None)
+        if timestamp:
+            date, time = timestamp.split('T')  # Split timestamp into date and time
+            transformed_data["date"].append(date)
+            transformed_data["time"].append(time.split('.')[0])  # Split to remove milliseconds
 
     if graph_type == "voltage":
         # Extract voltage data (V1, V2, V3)

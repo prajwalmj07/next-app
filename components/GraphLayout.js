@@ -3,7 +3,7 @@ import Card from './Card';
 import FullScreenCard from './FullScreenCard';
 import VoltageChart from './charts/VoltageChart';
 import CurrentChart from './charts/CurrentChart';
-import EnergyChart from './charts/EnergyChart';
+import PowerChart from './charts/PowerChart';
 import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';
 
 const GraphLayout = () => {
@@ -16,21 +16,25 @@ const GraphLayout = () => {
     });
   };
 
+  const getChartType = (metric) => {
+    return graphConfig[metric]?.chartType || 'line';  // Default to 'line' if not defined
+  };
+
   const cards = [
     { 
       title: "Voltage", 
       metric: "voltage",
-      component: <VoltageChart selectedMeter={selectedMeter} chartType={graphConfig.voltage.chartType} /> 
+      component: <VoltageChart selectedMeter={selectedMeter} chartType={getChartType('voltage')} /> 
     },
     { 
       title: "Current", 
       metric: "current",
-      component: <CurrentChart selectedMeter={selectedMeter} chartType={graphConfig.current.chartType} /> 
+      component: <CurrentChart selectedMeter={selectedMeter} chartType={getChartType('current')} /> 
     },
     { 
-      title: "Energy Consumption", 
-      metric: "energy",
-      component: <EnergyChart selectedMeter={selectedMeter} chartType={graphConfig.energy.chartType} /> 
+      title: "Power", 
+      metric: "power",
+      component: <PowerChart selectedMeter={selectedMeter} chartType={getChartType('power')} /> 
     },
   ];
 
@@ -40,7 +44,7 @@ const GraphLayout = () => {
       <FullScreenCard
         title={card.title}
         onClose={() => setFullScreenCard(null)}
-        chartType={graphConfig[card.metric].chartType}
+        chartType={getChartType(card.metric)}
         onChangeChartType={(newType) => changeChartType(card.metric, newType)}
       >
         {card.component}
@@ -51,12 +55,12 @@ const GraphLayout = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
       {cards.map((card, index) => (
-        graphConfig[card.metric].show && (
+        graphConfig[card.metric]?.show && (
           <Card 
             key={index}
             title={card.title}
             onFullScreen={() => setFullScreenCard(index)}
-            chartType={graphConfig[card.metric].chartType}
+            chartType={getChartType(card.metric)}
             onChangeChartType={(newType) => changeChartType(card.metric, newType)}
           >
             {card.component}

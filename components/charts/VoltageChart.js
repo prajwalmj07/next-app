@@ -1,15 +1,37 @@
 import React from 'react';
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, TimeScale, Title, Tooltip, Legend } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import GenericChart from '../GenericChart';
+import useFetchEnergyData from '../../hooks/useFetchEnergyData';
 
+// Register the required components
+ChartJS.register(LineElement, CategoryScale, LinearScale, TimeScale, Title, Tooltip, Legend);
 
 const VoltageChart = ({ selectedMeter, chartType }) => {
-  // Dummy data - replace with actual data fetched from backend
-  const data = {
-    labels: ['1', '2', '3', '4', '5'],
+  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'voltage');
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!data) return null;
+
+  const chartData = {
+    labels: data.time.map((time, index) => `${data.date[index]} ${time}`),
     datasets: [
       {
-        label: 'Voltage',
-        data: [220, 230, 225, 228, 232],
+        label: 'Voltage 1',
+        data: data.voltage1,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Voltage 2',
+        data: data.voltage2,
+        borderColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+      },
+      {
+        label: 'Voltage 3',
+        data: data.voltage3,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
@@ -27,9 +49,30 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
         text: `Voltage for Meter ${selectedMeter}`,
       },
     },
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'minute',
+          displayFormats: {
+            minute: 'HH:mm',
+          },
+        },
+        title: {
+          display: true,
+          text: 'Time',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Voltage (V)',
+        },
+      },
+    },
   };
 
-  return <GenericChart chartType={chartType} data={data} options={options} />;
+  return <GenericChart chartType={chartType} data={chartData} options={options} />;
 };
 
-export default VoltageChart; 
+export default VoltageChart;

@@ -1,7 +1,7 @@
 import React from 'react';
 import VoltageChart from './charts/VoltageChart';
 import CurrentChart from './charts/CurrentChart';
-import EnergyChart from './charts/EnergyChart';
+import EnergyChart from './charts/PowerChart';
 
 const ChartContainer = ({ selectedMeter, chartTypes }) => {
   const chartData = {

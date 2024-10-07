@@ -1,11 +1,8 @@
-// components/EnergyMeterSidebar.js
-import { selectedMeterState } from '@/lib/atoms';
 import React from 'react';
-import { useRecoilState } from 'recoil';
-
+import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';
 
 const EnergyMeterSidebar = () => {
-  const [selectedMeter, setSelectedMeter] = useRecoilState(selectedMeterState);
+  const { selectedMeter, setSelectedMeter } = useEnergyMeterStates();
 
   const energyMeters = [
     { id: 'WR2001000008', name: 'Energy Meter 1' },

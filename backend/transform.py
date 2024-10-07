@@ -1,11 +1,28 @@
 from fastapi import HTTPException
 
+def extract_device_info(raw_data):
+    # Assuming the first record contains device info
+    device_data = raw_data[0]['property']
+    
+    # Extract relevant device information
+    device_info = {
+        "serialNumber": device_data.get('serial number', None),
+        "macAddress": device_data.get('mac address', None),
+        "version": device_data.get('version', None),
+        "status": device_data.get('status', None),
+    }
+
+    return device_info
+
+
 # Transformation function to structure data based on graph type
 def transform_data(graph_type: str, raw_data):
     transformed_data = {
         "date": [],  # To hold extracted dates
         "time": []   # To hold extracted times
     }
+    
+    
 
     for record in raw_data:
         timestamp = record.get('created_at', None)

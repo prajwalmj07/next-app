@@ -3,13 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Literal
 import httpx
 import uvicorn
-from transform import transform_data  # transform module
+from transform import extract_device_info, transform_data  # Separate module import
 
 app = FastAPI()
 
+# Enable CORS for all origins (adjust if necessary)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjustable to specify
+    allow_origins=["*"],  # Adjust this to specific origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -55,6 +56,18 @@ async def get_graph_data(deviceSerialNumber: str, graph_type: Literal["voltage",
 
     return transformed_data
 
+@app.get("/api/device_info/{device_serial}")
+async def get_device_info(device_serial: str, data_per_page: int = 1):
+    # Fetch raw data for the device based on serial number
+    raw_data = await fetch_data(device_serial, data_per_page)
+
+    if not raw_data:
+        raise HTTPException(status_code=500, detail="Failed to fetch data")
+
+    # Use extract_device_info from transform.py to get device info
+    device_info = extract_device_info(raw_data)
+
+    return {"device_info": device_info}
 
 if __name__ == "__main__":
     # Run the application using Uvicorn

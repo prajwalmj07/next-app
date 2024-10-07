@@ -1,11 +1,6 @@
 import React from 'react';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, TimeScale, Title, Tooltip, Legend } from 'chart.js';
-import 'chartjs-adapter-date-fns';
 import GenericChart from '../GenericChart';
 import useFetchEnergyData from '../../hooks/useFetchEnergyData';
-
-// Register the required components
-ChartJS.register(LineElement, CategoryScale, LinearScale, TimeScale, Title, Tooltip, Legend);
 
 const VoltageChart = ({ selectedMeter, chartType }) => {
   const { data, loading, error } = useFetchEnergyData(selectedMeter, 'voltage');
@@ -15,52 +10,48 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
   if (!data) return null;
 
   const chartData = {
-    labels: data.time.map((time, index) => `${data.date[index]} ${time}`),
+    labels: data.time.map((time) => time),
     datasets: [
       {
-        label: 'Voltage 1',
+        label: 'V1',
         data: data.voltage1,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(34, 202, 236, 1)',  // Light Cyan
+        backgroundColor: 'rgba(34, 202, 236, 0.5)',
       },
       {
-        label: 'Voltage 2',
+        label: 'V2',
         data: data.voltage2,
-        borderColor: 'rgb(54, 162, 235)',
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(75, 192, 192, 1)',  // Light Teal
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
       {
-        label: 'Voltage 3',
+        label: 'V3',
         data: data.voltage3,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        borderColor: 'rgba(255, 159, 64, 1)',  // Light Orange
+        backgroundColor: 'rgba(255, 159, 64, 0.5)',
       },
     ],
   };
 
   const options = {
-    responsive: true,
     plugins: {
       legend: {
         position: 'top',
       },
       title: {
         display: true,
-        text: `Voltage for Meter ${selectedMeter}`,
+        text: `Voltage`,
+        font: {
+          size: 14,
+        },
       },
     },
     scales: {
       x: {
-        type: 'time',
-        time: {
-          unit: 'minute',
-          displayFormats: {
-            minute: 'HH:mm',
-          },
-        },
-        title: {
-          display: true,
-          text: 'Time',
+        ticks: {
+          maxRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 5,
         },
       },
       y: {

@@ -1,9 +1,10 @@
+// EnergyMeterSidebar.js
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';
 
 const EnergyMeterSidebar = () => {
   const { selectedMeter, setSelectedMeter } = useEnergyMeterStates();
-
   const energyMeters = [
     { id: 'WR2001000008', name: 'Energy Meter 1' },
     { id: "WR2009000663", name: 'Energy Meter 2' },
@@ -13,20 +14,22 @@ const EnergyMeterSidebar = () => {
 
   return (
     <div className="bg-white h-full">
-      <h2 className="font-semibold mb-4 text-gray-800 text-xl px-4 py-2 border-b border-gray-200 sticky top-0 bg-white z-10">Energy Meters</h2>
-      <ul>
+      <h2 className="font-bold mb-6 text-gray-800 text-2xl px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">Energy Meters</h2>
+      <ul className="px-4">
         {energyMeters.map((meter) => (
-          <li
+          <motion.li
             key={meter.id}
-            className={`py-3 px-4 cursor-pointer transition-colors duration-300 ${
+            className={`py-4 px-6 cursor-pointer rounded-lg transition-colors duration-300 ${
               selectedMeter === meter.id
-                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-500'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-100 text-blue-700 font-semibold'
+                : 'text-gray-600 hover:bg-gray-100'
             }`}
             onClick={() => setSelectedMeter(meter.id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {meter.name}
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>

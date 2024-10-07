@@ -1,4 +1,6 @@
+// GraphLayout.js
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Card from './Card';
 import FullScreenCard from './FullScreenCard';
 import VoltageChart from './charts/VoltageChart';
@@ -17,7 +19,7 @@ const GraphLayout = () => {
   };
 
   const getChartType = (metric) => {
-    return graphConfig[metric]?.chartType || 'line';  // Default to 'line' if not defined
+    return graphConfig[metric]?.chartType || 'line';
   };
 
   const cards = [
@@ -54,19 +56,28 @@ const GraphLayout = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
-      {cards.map((card, index) => (
-        graphConfig[card.metric]?.show && (
-          <Card 
-            key={index}
-            title={card.title}
-            onFullScreen={() => setFullScreenCard(index)}
-            chartType={getChartType(card.metric)}
-            onChangeChartType={(newType) => changeChartType(card.metric, newType)}
-          >
-            {card.component}
-          </Card>
-        )
-      ))}
+      <AnimatePresence>
+        {cards.map((card, index) => (
+          graphConfig[card.metric]?.show && (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card 
+                title={card.title}
+                onFullScreen={() => setFullScreenCard(index)}
+                chartType={getChartType(card.metric)}
+                onChangeChartType={(newType) => changeChartType(card.metric, newType)}
+              >
+                {card.component}
+              </Card>
+            </motion.div>
+          )
+        ))}
+      </AnimatePresence>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const Dropdown = ({ chartType, onChangeChartType, className }) => {
       <option value="bar">Bar Chart</option>
       <option value="pie">Pie Chart</option>
       <option value="doughnut">Doughnut Chart</option>
-      <option value="area">Area Chart</option>
+      {/* <option value="area">Area Chart</option> */}
     </motion.select>
   );
 };

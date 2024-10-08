@@ -17,18 +17,21 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
         data: data.voltage1,
         borderColor: 'rgba(34, 202, 236, 1)',  // Light Cyan
         backgroundColor: 'rgba(34, 202, 236, 0.5)',
+        fill: chartType === 'area' ? true : false,  // Fill only for area chart
       },
       {
         label: 'V2',
         data: data.voltage2,
         borderColor: 'rgba(75, 192, 192, 1)',  // Light Teal
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        fill: chartType === 'area' ? true : false,
       },
       {
         label: 'V3',
         data: data.voltage3,
         borderColor: 'rgba(255, 159, 64, 1)',  // Light Orange
         backgroundColor: 'rgba(255, 159, 64, 0.5)',
+        fill: chartType === 'area' ? true : false,
       },
     ],
   };

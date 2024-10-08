@@ -1,4 +1,3 @@
-// GenericChart.js
 import React from 'react';
 import { Line, Bar, Pie, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
@@ -10,7 +9,8 @@ const GenericChart = ({ chartType, data, options }) => {
     line: Line,
     bar: Bar,
     pie: Pie,
-    doughnut: Doughnut
+    doughnut: Doughnut,
+    area: Line // For area chart, use Line with `fill: true` in the dataset
   }[chartType] || Line;
 
   // Adjust options for better responsiveness and visibility
@@ -27,11 +27,11 @@ const GenericChart = ({ chartType, data, options }) => {
           boxWidth: 10,
           padding: 10,
           font: {
-            size: 10
-          }
-        }
-      }
-    }
+            size: 10,
+          },
+        },
+      },
+    },
   };
 
   // Additional adjustments for pie and doughnut charts
@@ -42,8 +42,8 @@ const GenericChart = ({ chartType, data, options }) => {
         left: 10,
         right: 10,
         top: 0,
-        bottom: 0
-      }
+        bottom: 0,
+      },
     };
   }
 

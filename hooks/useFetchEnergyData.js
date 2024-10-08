@@ -9,7 +9,7 @@ const useFetchEnergyData = (selectedMeter, dataType) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:5000/api/fetch_graph_data/${selectedMeter}/${dataType}?data_per_page=10`);
+        const response = await fetch(`http://localhost:5000/api/fetch_graph_data/${selectedMeter}/${dataType}?data_per_page=15`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

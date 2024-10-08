@@ -17,18 +17,21 @@ const PowerChart = ({ selectedMeter, chartType }) => {
         data: data.KW_L1,
         borderColor: 'rgba(255, 99, 132, 1)',  // Light Red
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        fill: chartType === 'area',  // Fill only for area chart
       },
       {
         label: 'Power L2',
         data: data.KW_L2,
         borderColor: 'rgba(75, 192, 192, 1)',  // Light Teal
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        fill: chartType === 'area',
       },
       {
         label: 'Power L3',
         data: data.KW_L3,
         borderColor: 'rgba(255, 206, 86, 1)',  // Light Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.5)',
+        fill: chartType === 'area',
       },
     ],
   };

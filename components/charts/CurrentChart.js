@@ -17,18 +17,21 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
         data: data.current1,
         borderColor: 'rgba(54, 162, 235, 1)',  // Light Blue
         backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        fill: chartType === 'area',  // Fill only for area chart
       },
       {
         label: 'Current 2',
         data: data.current2,
         borderColor: 'rgba(153, 102, 255, 1)',  // Light Purple
         backgroundColor: 'rgba(153, 102, 255, 0.5)',
+        fill: chartType === 'area',
       },
       {
         label: 'Current 3',
         data: data.current3,
         borderColor: 'rgba(255, 206, 86, 1)',  // Light Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.5)',
+        fill: chartType === 'area',
       },
     ],
   };

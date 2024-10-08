@@ -1,94 +1,69 @@
-'use client';
+import React from 'react';
+import GenericChart from '../GenericChart';
+import useFetchEnergyData from '../../hooks/useFetchEnergyData';
 
-import { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+const CurrentChart = ({ selectedMeter, chartType }) => {
+  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'current');
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, Filler);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!data) return null;
 
-const CurrentChart = ({ selectedMeter }) => {
-  const [currentData, setCurrentData] = useState({ current1: [], current2: [], current3: [] });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCurrentData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/${selectedMeter}/energymeterdata?data_per_page=11`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const current1 = data.map(record => record.energyMeterdata.current.I1);
-        const current2 = data.map(record => record.energyMeterdata.current.I2);
-        const current3 = data.map(record => record.energyMeterdata.current.I3);
-
-        setCurrentData({
-          current1: current1.map(Number),
-          current2: current2.map(Number),
-          current3: current3.map(Number),
-        });
-      } catch (error) {
-        console.error('Error fetching current data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCurrentData();
-  }, [selectedMeter]); // Re-fetch data when selected meter changes
-
-  const labels = ['0s', '1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s'];
-
-  const data = {
-    labels,
+  const chartData = {
+    labels: data.time.map((time) => time),
     datasets: [
       {
-        label: 'I1 Current',
-        data: currentData.current1,
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        fill: true,
+        label: 'Current 1',
+        data: data.current1,
+        borderColor: 'rgba(54, 162, 235, 1)',  // Light Blue
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
       },
       {
-        label: 'I2 Current',
-        data: currentData.current2,
-        borderColor: 'rgba(54, 162, 235, 1)',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        fill: true,
+        label: 'Current 2',
+        data: data.current2,
+        borderColor: 'rgba(153, 102, 255, 1)',  // Light Purple
+        backgroundColor: 'rgba(153, 102, 255, 0.5)',
       },
       {
-        label: 'I3 Current',
-        data: currentData.current3,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
+        label: 'Current 3',
+        data: data.current3,
+        borderColor: 'rgba(255, 206, 86, 1)',  // Light Yellow
+        backgroundColor: 'rgba(255, 206, 86, 0.5)',
       },
     ],
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: { title: { display: true, text: 'Time (s)' } },
-      y: {
-        title: { display: true, text: 'Current (A)' },
-        min: 0,
-        max: 15,
-        ticks: { stepSize: 0.5 },
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: `Current for Meter ${selectedMeter}`,
+        font: {
+          size: 14,
+        },
       },
     },
-    plugins: {
-      legend: { position: 'top' },
-      title: { display: true, text: 'Current Over Time' },
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 5,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Current (A)',
+        },
+      },
     },
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  return <Line data={data} options={options} />;
+  return <GenericChart chartType={chartType} data={chartData} options={options} />;
 };
 
 export default CurrentChart;

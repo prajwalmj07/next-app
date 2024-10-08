@@ -1,6 +1,9 @@
-import { Inter } from 'next/font/google';
+import RecoilProvider from '@/components/RecoilProvider';
 import './globals.css';
-import { SidebarDemo } from '@/components/SidebarDemo'; // Assuming SidebarDemo is in /components
+
+import { Inter } from 'next/font/google';
+import { SidebarDemo } from '@/components/SidebarDemo';
+ // Import the RecoilProvider
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,10 +16,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-       
-        <SidebarDemo>
-          {children} {/* Pages will be rendered inside the layout with the sidebar */}
-        </SidebarDemo>
+        <RecoilProvider>
+          <SidebarDemo>
+            {children}
+          </SidebarDemo>
+        </RecoilProvider>
       </body>
     </html>
   );

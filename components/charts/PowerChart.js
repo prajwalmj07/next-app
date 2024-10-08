@@ -2,8 +2,8 @@ import React from 'react';
 import GenericChart from '../GenericChart';
 import useFetchEnergyData from '../../hooks/useFetchEnergyData';
 
-const VoltageChart = ({ selectedMeter, chartType }) => {
-  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'voltage');
+const PowerChart = ({ selectedMeter, chartType }) => {
+  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'power');
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -13,22 +13,22 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
     labels: data.time.map((time) => time),
     datasets: [
       {
-        label: 'V1',
-        data: data.voltage1,
-        borderColor: 'rgba(34, 202, 236, 1)',  // Light Cyan
-        backgroundColor: 'rgba(34, 202, 236, 0.5)',
+        label: 'Power L1',
+        data: data.KW_L1,
+        borderColor: 'rgba(255, 99, 132, 1)',  // Light Red
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
-        label: 'V2',
-        data: data.voltage2,
+        label: 'Power L2',
+        data: data.KW_L2,
         borderColor: 'rgba(75, 192, 192, 1)',  // Light Teal
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
       {
-        label: 'V3',
-        data: data.voltage3,
-        borderColor: 'rgba(255, 159, 64, 1)',  // Light Orange
-        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+        label: 'Power L3',
+        data: data.KW_L3,
+        borderColor: 'rgba(255, 206, 86, 1)',  // Light Yellow
+        backgroundColor: 'rgba(255, 206, 86, 0.5)',
       },
     ],
   };
@@ -40,7 +40,7 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
       },
       title: {
         display: true,
-        text: `Voltage`,
+        text: `Power for Meter ${selectedMeter}`,
         font: {
           size: 14,
         },
@@ -57,7 +57,7 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
       y: {
         title: {
           display: true,
-          text: 'Voltage (V)',
+          text: 'Power (kW)',
         },
       },
     },
@@ -66,4 +66,4 @@ const VoltageChart = ({ selectedMeter, chartType }) => {
   return <GenericChart chartType={chartType} data={chartData} options={options} />;
 };
 
-export default VoltageChart;
+export default PowerChart;

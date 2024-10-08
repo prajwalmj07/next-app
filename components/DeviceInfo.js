@@ -1,20 +1,95 @@
-// components/DeviceInfo.js
+// DeviceInfo.js
 import React from 'react';
+import { motion } from 'framer-motion';
+import useFetchDeviceInfo from '../hooks/useFetchDeviceInfo';
+import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';
 
 const DeviceInfo = () => {
+  const { selectedMeter } = useEnergyMeterStates();
+  const { data: deviceData, loading, error } = useFetchDeviceInfo(selectedMeter);
+
+  // Map meter IDs to their names
+  const meterNames = {
+    'WR2001000008': 'Energy Meter 1',
+    'WR2009000663': 'Energy Meter 2',
+    'WR2109000129': 'Energy Meter 3',
+    'WR2109000127': 'Energy Meter 6',
+  };
+
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-xl rounded-lg p-6"
+      >
+        <h3 className="font-bold text-gray-800 text-xl mb-4">Device Information</h3>
+        <p className="text-gray-600">Loading device information...</p>
+      </motion.div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-xl rounded-lg p-6"
+      >
+        <h3 className="font-bold text-gray-800 text-xl mb-4">Device Information</h3>
+        <p className="text-red-600">Error loading device information: {error}</p>
+      </motion.div>
+    );
+  }
+
+  if (!deviceData) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-xl rounded-lg p-6"
+      >
+        <h3 className="font-bold text-gray-800 text-xl mb-4">Device Information</h3>
+        <p className="text-gray-600">No device selected.</p>
+      </motion.div>
+    );
+  }
+
   return (
-    <div className="bg-gray-50 p-6 rounded-lg mt-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
-      <h4 className="font-semibold text-xl text-gray-800 mb-4">Device Information</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
-        <span>Device Name: Energy-Meter-02</span>
-        <span>Model Name: WR222-WLAN+LTE-E</span>
-        <span>Status: Normal</span>
-        <span>Serial Number: WR20090000663</span>
-        <span>IP Address: 192.168.1.10</span>
-        <span>MAC Address: 94:66:e7:00:57:c1</span>
-        <span>Version: 1.5.5</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white shadow-xl rounded-lg p-6"
+    >
+      <h3 className="font-bold text-gray-800 text-xl mb-6">Device Information</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <InfoItem 
+          title="Selected Meter" 
+          value={meterNames[selectedMeter] || selectedMeter} 
+          className="text-blue-600 font-semibold"
+        />
+        <InfoItem title="Serial Number" value={deviceData.serialNumber} />
+        <InfoItem title="MAC Address" value={deviceData.macAddress} />
+        <InfoItem title="Version" value={deviceData.version} />
+        <InfoItem 
+          title="Status" 
+          value={deviceData.status} 
+          className={deviceData.status === 'normal' ? 'text-green-600' : 'text-red-600'}
+        />
       </div>
-    </div>
+    </motion.div>
   );
 };
+
+const InfoItem = ({ title, value, className = '' }) => (
+  <div>
+    <h4 className="font-semibold text-gray-700 mb-1">{title}</h4>
+    <p className={`text-gray-800 ${className}`}>{value || 'N/A'}</p>
+  </div>
+);
+
 export default DeviceInfo;

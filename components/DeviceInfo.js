@@ -13,6 +13,7 @@ const DeviceInfo = () => {
     'WR2001000008': 'Energy Meter 1',
     'WR2009000663': 'Energy Meter 2',
     'WR2109000129': 'Energy Meter 3',
+    'WR2109000128': 'Energy Meter 4',
     'WR2109000127': 'Energy Meter 6',
   };
 

@@ -9,6 +9,7 @@ const EnergyMeterSidebar = () => {
     { id: 'WR2001000008', name: 'Energy Meter 1' },
     { id: "WR2009000663", name: 'Energy Meter 2' },
     { id: "WR2109000129", name: 'Energy Meter 3' },
+    { id: "WR2109000128", name: 'Energy Meter 4' },
     { id: 'WR2109000127', name: 'Energy Meter 6' },
   ];
 

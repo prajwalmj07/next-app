@@ -1,4 +1,3 @@
-// EnergyMeterSidebar.js
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';

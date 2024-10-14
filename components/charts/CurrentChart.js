@@ -1,9 +1,13 @@
+// components/charts/CurrentChart.js
 import React from 'react';
 import GenericChart from '../GenericChart';
 import useFetchEnergyData from '../../hooks/useFetchEnergyData';
+import { useRecoilValue } from 'recoil';
+import { shouldFetchDataState } from '../../lib/atoms';
 
 const CurrentChart = ({ selectedMeter, chartType }) => {
-  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'current');
+  const shouldFetchData = useRecoilValue(shouldFetchDataState);
+  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'current', shouldFetchData);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -15,21 +19,21 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
       {
         label: 'Current 1',
         data: data.current1,
-        borderColor: 'rgba(54, 162, 235, 1)',  // Light Blue
+        borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        fill: chartType === 'area',  // Fill only for area chart
+        fill: chartType === 'area',
       },
       {
         label: 'Current 2',
         data: data.current2,
-        borderColor: 'rgba(153, 102, 255, 1)',  // Light Purple
+        borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.5)',
         fill: chartType === 'area',
       },
       {
         label: 'Current 3',
         data: data.current3,
-        borderColor: 'rgba(255, 206, 86, 1)',  // Light Yellow
+        borderColor: 'rgba(255, 206, 86, 1)',
         backgroundColor: 'rgba(255, 206, 86, 0.5)',
         fill: chartType === 'area',
       },

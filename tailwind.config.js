@@ -57,6 +57,10 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      height: {
+        '68': '17rem', // Custom height
+        '72': '18rem',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -74,4 +78,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

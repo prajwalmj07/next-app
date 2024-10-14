@@ -19,22 +19,22 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
       {
         label: 'Current 1',
         data: data.current1,
-        borderColor: 'rgba(54, 162, 235, 1)',
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
         fill: chartType === 'area',
       },
       {
         label: 'Current 2',
         data: data.current2,
-        borderColor: 'rgba(153, 102, 255, 1)',
-        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
         fill: chartType === 'area',
       },
       {
         label: 'Current 3',
         data: data.current3,
-        borderColor: 'rgba(255, 206, 86, 1)',
-        backgroundColor: 'rgba(255, 206, 86, 0.5)',
+        borderColor: 'rgba(255, 159, 64, 1)',
+        backgroundColor: 'rgba(255, 159, 64, 0.5)',
         fill: chartType === 'area',
       },
     ],
@@ -47,7 +47,7 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
       },
       title: {
         display: true,
-        text: `Current for Meter ${selectedMeter}`,
+        text: `Current`,
         font: {
           size: 14,
         },

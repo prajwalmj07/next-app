@@ -5,7 +5,7 @@ import ChartTypeSelector from "./ChartTypeSelector";
 
 const Card = ({ title, onFullScreen, onChangeChartType, chartType, children }) => {
   return (
-    <div className="bg-white shadow-xl rounded-lg relative p-4 h-64 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1">
+    <div className="bg-white shadow-xl rounded-lg relative p-4 h-68 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1">
       <div className="flex justify-between items-center mb-2">
         <h3 className="font-bold text-gray-800 text-lg">{title}</h3>
         <div className="flex items-center space-x-2">

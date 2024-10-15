@@ -5,6 +5,9 @@ import FullScreenCard from './FullScreenCard';
 import VoltageChart from './charts/VoltageChart';
 import CurrentChart from './charts/CurrentChart';
 import PowerChart from './charts/PowerChart';
+import ApparentReactivePowerChart from './charts/ApparentReactivePowerChart';
+import TotalPowerChart from './charts/TotalPowerChart';
+import FrequencyChart from './charts/FrequencyChart';
 import { useEnergyMeterStates } from '../hooks/useEnergyMeterStates';
 
 const GraphLayout = () => {
@@ -37,6 +40,21 @@ const GraphLayout = () => {
       metric: "power",
       component: (chartType) => <PowerChart selectedMeter={selectedMeter} chartType={chartType} /> 
     },
+    { 
+      title: "Apparent vs Reactive Power", 
+      metric: "apparent_vs_reactive_power",
+      component: (chartType) => <ApparentReactivePowerChart selectedMeter={selectedMeter} chartType={chartType} /> 
+    },
+    { 
+      title: "Total Power", 
+      metric: "total_power",
+      component: (chartType) => <TotalPowerChart selectedMeter={selectedMeter} chartType={chartType} /> 
+    },
+    { 
+      title: "Frequency", 
+      metric: "frequency",
+      component: (chartType) => <FrequencyChart selectedMeter={selectedMeter} chartType={chartType} /> 
+    }
   ];
 
   return (

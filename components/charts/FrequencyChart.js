@@ -1,13 +1,13 @@
-// components/charts/CurrentChart.js
+// components/charts/FrequencyChart.js
 import React from 'react';
 import GenericChart from '../GenericChart';
 import useFetchEnergyData from '../../hooks/useFetchEnergyData';
 import { useRecoilValue } from 'recoil';
 import { shouldFetchDataState } from '../../lib/atoms';
 
-const CurrentChart = ({ selectedMeter, chartType }) => {
+const FrequencyChart = ({ selectedMeter, chartType }) => {
   const shouldFetchData = useRecoilValue(shouldFetchDataState);
-  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'current', shouldFetchData);
+  const { data, loading, error } = useFetchEnergyData(selectedMeter, 'frequency', shouldFetchData);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -17,24 +17,24 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
     labels: data.time.map((time) => time),
     datasets: [
       {
-        label: 'Current 1',
-        data: data.current1,
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        label: 'Frequency (Hz)',
+        data: data.Frequency,
+        borderColor: 'rgba(0, 123, 255, 1)',
+        backgroundColor: 'rgba(0, 123, 255, 0.5)',
         fill: chartType === 'area',
       },
       {
-        label: 'Current 2',
-        data: data.current2,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        label: 'Total KVAR',
+        data: data.Total_KVAR,
+        borderColor: 'rgba(40, 167, 69, 1)',
+        backgroundColor: 'rgba(40, 167, 69, 0.5)',
         fill: chartType === 'area',
       },
       {
-        label: 'Current 3',
-        data: data.current3,
-        borderColor: 'rgba(255, 159, 64, 1)',
-        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+        label: 'Total KVA',
+        data: data.Total_KVA,
+        borderColor: 'rgba(255, 193, 7, 1)',
+        backgroundColor: 'rgba(255, 193, 7, 0.5)',
         fill: chartType === 'area',
       },
     ],
@@ -47,7 +47,7 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
       },
       title: {
         display: true,
-        text: `Current`,
+        text: `Frequency and Power`,
         font: {
           size: 14,
         },
@@ -64,7 +64,7 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
       y: {
         title: {
           display: true,
-          text: 'Current (A)',
+          text: 'Frequency (Hz) / Power (KVAR, KVA)',
         },
       },
     },
@@ -73,4 +73,4 @@ const CurrentChart = ({ selectedMeter, chartType }) => {
   return <GenericChart chartType={chartType} data={chartData} options={options} />;
 };
 
-export default CurrentChart;
+export default FrequencyChart;

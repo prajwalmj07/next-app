@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # The API URL to fetch raw data
-api_url = 'https://device-services-maya.gentleplant-8ec40f17.centralindia.azurecontainerapps.io/api/device-service/v2/c09b7257-2c61-4854-8461-f9f8abeb6a68/device_management/fetch_chart_data'  # Update with your actual API URL
+api_url = ''  # Update with your actual API URL
 
 # Function to fetch raw data from the external API
 async def fetch_data(deviceSerialNumber: str, dataPerPage: int):
